@@ -1,6 +1,6 @@
 package com.gmail.tas;
 
-public class Point extends Shape{
+public class Point{
 	private double x;
 	private double y;
 
@@ -29,14 +29,7 @@ public class Point extends Shape{
 	public void setY(double y) {
 		this.y = y;
 	}
-	@Override
-	public double getPerimetr() {
-		return 0;
-	}
-	@Override
-	public double getArea() {
-		return 0;
-	}
+
 	
 	@Override
 	public String toString() {
