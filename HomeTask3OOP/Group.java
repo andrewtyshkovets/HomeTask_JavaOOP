@@ -28,10 +28,12 @@ public class Group {
 			if (numb >= 10) {
 				throw new OutOfRangeException("Your index is out of range");
 			}
+			return groupOfStudent[numb];
 		} catch (OutOfRangeException e) {
-			e.getExceptionMessage();
+			System.out.println(e.getExceptionMessage());
+			return null;
 		}
-		return groupOfStudent[numb];
+
 	}
 
 	public void setGroupOfStudent(Student[] groupOfStudent) {
@@ -47,12 +49,14 @@ public class Group {
 	 */
 	public void setStudent(Student student, int n) {
 		try {
-			groupOfStudent[n] = student;
 			if (n >= 10) {
 				throw new OutOfRangeException("Your index is out of range");
+			} else {
+				groupOfStudent[n] = student;
 			}
 		} catch (OutOfRangeException e) {
-			e.getExceptionMessage();
+			System.out.println(e.getExceptionMessage());
+
 		}
 
 	}
@@ -66,15 +70,18 @@ public class Group {
 		try {
 			for (int i = 0; i < groupOfStudent.length; i++) {
 				if (groupOfStudent[i] == null) {
-					groupOfStudent[i] = student;
 					if (i >= 10) {
 						throw new OutOfRangeException("Your index is out of range");
+					} else {
+						groupOfStudent[i] = student;
+						break;
 					}
-					break;
 				}
 			}
 		} catch (OutOfRangeException e) {
-			e.getExceptionMessage();
+			System.out.println(e.getExceptionMessage());
+		} catch (NullPointerException e) {
+
 		}
 
 	}
@@ -86,12 +93,12 @@ public class Group {
 	 */
 	public void deleteStudent(int n) {
 		try {
-			groupOfStudent[n] = null;
 			if (n >= 10) {
 				throw new OutOfRangeException("Your index is out of range");
 			}
+			groupOfStudent[n] = null;
 		} catch (OutOfRangeException e) {
-			e.getExceptionMessage();
+			System.out.println(e.getExceptionMessage());
 		}
 	}
 
@@ -159,7 +166,6 @@ public class Group {
 	public static Student[] sortBySurname(Student[] groupOfStudent) {
 
 		String[] surnamesToLowerCase = new String[groupOfStudent.length];
-		int numb = 0;
 		for (int i = 0; i < groupOfStudent.length; i++) {
 			try {
 				surnamesToLowerCase[i] = groupOfStudent[i].getSurname().toLowerCase();
@@ -196,7 +202,6 @@ public class Group {
 		}
 		return groupOfStudent;
 	}
-	
 
 	@Override
 	public String toString() {

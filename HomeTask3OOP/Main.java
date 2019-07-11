@@ -22,7 +22,7 @@ public class Main {
 		gr1.setStudent(s3, 5);
 		gr1.setStudent(s4, 8);
 		gr1.setStudent(s5, 9);
-		gr1.setStudent(s6, 4);
+		gr1.deleteStudent(5);
 		System.out.println(gr1);
 		System.out.println(gr1.findStudent("walker"));
 		System.out.println(gr1);
