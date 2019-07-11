@@ -156,10 +156,16 @@ public class Group {
 	 * 
 	 * @param groupOfStudent
 	 */
-	public static void sortBySurname(Student[] groupOfStudent) {
+	public static Student[] sortBySurname(Student[] groupOfStudent) {
+
 		String[] surnamesToLowerCase = new String[groupOfStudent.length];
+		int numb = 0;
 		for (int i = 0; i < groupOfStudent.length; i++) {
-			surnamesToLowerCase[i] = groupOfStudent[i].getSurname().toLowerCase();
+			try {
+				surnamesToLowerCase[i] = groupOfStudent[i].getSurname().toLowerCase();
+			} catch (NullPointerException e) {
+				surnamesToLowerCase[i] = "wwwwwwwwwwwwwww";
+			}
 		}
 
 		char[][] surnames = new char[groupOfStudent.length][];
@@ -188,14 +194,9 @@ public class Group {
 				}
 			}
 		}
-
-		for (int i = 0; i < surnames.length; i++) {
-			for (int j = 0; j < surnames[i].length; j++) {
-				System.out.print(surnames[i][j]);
-			}
-			System.out.println();
-		}
+		return groupOfStudent;
 	}
+	
 
 	@Override
 	public String toString() {
