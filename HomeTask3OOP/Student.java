@@ -1,5 +1,9 @@
 package com.gmail.tas;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Student extends Human {
 	private String universuty;
 	private String faculty;
@@ -39,6 +43,26 @@ public class Student extends Human {
 	public void setNumbOfCreditBook(int numbOfCreditBook) {
 		this.numbOfCreditBook = numbOfCreditBook;
 	}
+	
+	public int getStudentsAge(Student student) {
+		Date date = new Date();
+		Calendar currentDate = getCalendar(date);
+		Calendar birthDate = getCalendar(student.getDateOfBirth());
+		int diff = currentDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+	    if (birthDate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH) || 
+	        (birthDate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) && birthDate.get(Calendar.DATE) > currentDate.get(Calendar.DATE))) {
+	        diff--;
+	    }
+	    return diff;
+    }
+	
+	public static Calendar getCalendar(Date date) {
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(date);
+	    return cal;
+	}
+	
+	
 
 	@Override
 	public String toString() {

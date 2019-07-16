@@ -2,9 +2,12 @@ package com.gmail.tas;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class Human {
+public class Human{
 
 	private String name;
 	private String surname;
@@ -49,6 +52,8 @@ public class Human {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+	
+
 
 	@Override
 	public String toString() {

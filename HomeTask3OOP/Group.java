@@ -1,10 +1,20 @@
 package com.gmail.tas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
+import javax.swing.JOptionPane;
+
+import com.gmail.tas.exeptions.NegativeValueExeption;
 import com.gmail.tas.exeptions.OutOfRangeException;
 
-public class Group {
+public class Group implements Voenkom {
 
 	private Student[] groupOfStudent = new Student[10];
 
@@ -74,7 +84,60 @@ public class Group {
 						throw new OutOfRangeException("Your index is out of range");
 					} else {
 						groupOfStudent[i] = student;
-						break;
+						return;
+					}
+				}
+			}
+		} catch (OutOfRangeException e) {
+			System.out.println(e.getExceptionMessage());
+		} catch (NullPointerException e) {
+
+		}
+
+	}
+
+	public void setStudentInteractive() {
+		Student student = new Student();
+		String name = JOptionPane.showInputDialog("Input name");
+		String surname = JOptionPane.showInputDialog("Input surname");
+		String universuty = JOptionPane.showInputDialog("Input University");
+		String faculty = JOptionPane.showInputDialog("Input faculty");
+		int numbOfCreditBook;
+		Date dateOfBirth;
+		String date = JOptionPane.showInputDialog("Input date of birth dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			numbOfCreditBook = Integer.valueOf(JOptionPane.showInputDialog("Input the number of credit book"));
+			if (numbOfCreditBook < 0) {
+				throw new NegativeValueExeption("Invalid number of credit book");
+			}
+			dateOfBirth = sdf.parse(date);
+			student.setName(name);
+			student.setSurname(surname);
+			student.setDateOfBirth(dateOfBirth);
+			student.setUniversuty(universuty);
+			student.setFaculty(faculty);
+			student.setNumbOfCreditBook(numbOfCreditBook);
+
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Error number format");
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Error number format");
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "Error null field");
+		} catch (NegativeValueExeption e) {
+			JOptionPane.showMessageDialog(null, e.getExceptionMessage());
+		}
+
+		try {
+			for (int i = 0; i < groupOfStudent.length; i++) {
+				if (groupOfStudent[i] == null) {
+					if (i >= 10) {
+						throw new OutOfRangeException("Your index is out of range");
+					} else {
+						groupOfStudent[i] = student;
+						return;
 					}
 				}
 			}
@@ -158,54 +221,55 @@ public class Group {
 		}
 	}
 
+	
+	
+	
 	/**
 	 * This method will sort student by their surnames
 	 * 
 	 * @param groupOfStudent
+	 * @param reverce
 	 */
-	public static Student[] sortBySurname(Student[] groupOfStudent) {
-
-		String[] surnamesToLowerCase = new String[groupOfStudent.length];
-		for (int i = 0; i < groupOfStudent.length; i++) {
-			try {
-				surnamesToLowerCase[i] = groupOfStudent[i].getSurname().toLowerCase();
-			} catch (NullPointerException e) {
-				surnamesToLowerCase[i] = "wwwwwwwwwwwwwww";
-			}
-		}
-
-		char[][] surnames = new char[groupOfStudent.length][];
-		for (int i = 0; i < surnames.length; i++) {
-			char[] surname = surnameToChar(surnamesToLowerCase[i]);
-			surnames[i] = surname;
-		}
-		Student temp1 = new Student();
-		for (int o = 0; o < surnames.length; o++) {
-			for (int i = 0; i < surnames.length - 1; i++) {
-				char[] temp = new char[surnames.length];
-				for (int j = 0; j < surnames[i].length; j++) {
-					if (surnames[i][j] != surnames[i + 1][j]) {
-						if (surnames[i][j] >= surnames[i + 1][j]) {
-							temp = surnames[i + 1];
-							surnames[i + 1] = surnames[i];
-							surnames[i] = temp;
-							temp1 = groupOfStudent[i + 1];
-							groupOfStudent[i + 1] = groupOfStudent[i];
-							groupOfStudent[i] = temp1;
-							break;
-						} else {
-							break;
-						}
-					}
-				}
-			}
-		}
-		return groupOfStudent;
+	public static void sortBySurname(Student[] groupOfStudent, boolean reverce) {
+		Arrays.sort(groupOfStudent, new SurnameComparator(reverce));
 	}
+	/**
+	 * This method will sort student by the number of credit book
+	 * 
+	 * @param groupOfStudent
+	 * @param reverce
+	 */
+	public void sortByNumber(Student[] groupOfStudent, boolean reverce) {
+		Arrays.sort(groupOfStudent, new CreditBookComparator(reverce));
+	}
+	
+	public void printArray (Object[] o) {
+		for (int i = 0; i < o.length; i++) {
+			
+		}
+	}
+	
+	@Override
+	public Student[] prizyv(Student[] groupOfStudent) {
+		Student[] goden = new Student[groupOfStudent.length];
+		int j = 0;
+		try {
+		for (int i = 0; i < groupOfStudent.length; i++) {
+			if(groupOfStudent[i].getStudentsAge(groupOfStudent[i])>18 && groupOfStudent[i].getStudentsAge(groupOfStudent[i])<27) {
+				goden[j]=groupOfStudent[i];
+				j+=1;
+			}
+		}
+		} catch (NullPointerException e) {
+		}
+		return goden;
+	}
+	
+	
 
 	@Override
 	public String toString() {
-		sortBySurname(getGroupOfStudent());
+		
 		return "Group [groupOfStudent=\n" + Arrays.toString(groupOfStudent) + "]";
 	}
 
